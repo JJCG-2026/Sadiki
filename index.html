@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5ème JJCG 2026 - Site Officiel</title>
+    <style>
+        :root {
+            --primary-blue: #004a99;
+            --sky-blue-light: #f0f9ff;
+            --border-color: #add8e6;
+            --white: #ffffff;
+            --day1-color: #004a99;
+            --day2-color: #2e7d32;
+            --poster-color: #fbc02d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: linear-gradient(rgba(240, 249, 255, 0.85), rgba(240, 249, 255, 0.85)), 
+                              url('https://images.unsplash.com/photo-1580136608260-4eff144d2e2d?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+
+        /* 1. LOGOS AVEC IMAGES */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-blue);
+        }
+        .logos-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .logo-box {
+            /* On remet les tailles d'origine */
+            width: 220px; 
+            height: 120px;
+            
+            /* On supprime TOUT le visuel du cadre */
+            border: none; 
+            background: transparent;
+            box-shadow: none;
+            
+            /* On garde l'alignement centré */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .logo-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            
+            /* On supprime l'ombre portée pour un look 100% plat et propre */
+            filter: none; 
+        }
+    
+        /* 2. Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--primary-blue);
+            padding: 12px 0;
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 8px 18px;
+            border: 2px solid white;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        nav a:hover { background: white; color: var(--primary-blue); }
+
+        /* Conteneur principal */
+        .main-container {
+            max-width: 1150px;
+            margin: 30px auto;
+            background-color: var(--sky-blue-light);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* 3. Accueil et Affiche */
+        .hero {
+            padding: 60px 40px;
+            text-align: center;
+            background: #e3f2fd;
+        }
+        .hero h1 { color: var(--primary-blue); font-size: 2.2em; text-transform: uppercase; margin-bottom: 10px; }
+        .hero p { font-style: italic; max-width: 900px; margin: 0 auto; line-height: 1.7; font-size: 1.1em; }
+        
+        .affiche-full {
+            width: 100%;
+            background: #fff;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .affiche-full img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .content { padding: 40px; }
+        h2 { 
+            color: var(--primary-blue); 
+            text-align: center; 
+            border: 2px solid var(--primary-blue);
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            margin: 40px 0 25px;
+            scroll-margin-top: 80px;
+        }
+
+        /* Thèmes */
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        .theme-card {
+            background: white;
+            border: 1px solid var(--primary-blue);
+            border-left: 10px solid var(--primary-blue);
+            padding: 20px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        /* Planning */
+        .day-title {
+            background: var(--day1-color);
+            color: white;
+            padding: 15px;
+            font-size: 1.4em;
+            font-weight: bold;
+            border-radius: 8px 8px 0 0;
+            margin-top: 20px;
+        }
+        .period-label {
+            background: #bbdefb;
+            padding: 8px 20px;
+            font-weight: bold;
+            border-left: 5px solid var(--day1-color);
+        }
+        .plan-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-bottom: 5px;
+        }
+        .plan-table td { padding: 12px; border-bottom: 1px solid #eee; }
+        .time-col { font-weight: bold; color: var(--primary-blue); width: 150px; }
+
+        .info-box {
+            background: #fff9c4;
+            padding: 25px;
+            border: 2px dashed #fbc02d;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        /* Comités */
+        .committee-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .member-card {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: center;
+            font-size: 0.85em;
+            border-radius: 4px;
+        }
+
+        footer {
+            background: var(--primary-blue);
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        @media (max-width: 800px) {
+            .committee-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logos-container">
+            <div class="logo-box">
+                <img src="Logo FSK.png" alt="Logo Université Ibn Tofail">
+            </div>
+            <div class="logos-container">
+            <div class="logo-box">
+                <img src="Logo Laboratoire.png" alt="Logo Labo">
+            </div>
+            <div class="logo-box">
+                <img src="Logo IS.png" alt="Logo Université Mohammed V - IS">
+            </div>
+            <div class="logo-box">
+                <img src="AMEDC Logo sans fond.png" alt="Logo AMDEC">
+            </div>
+        </div>
+    </header>
+
+    <nav id="main-nav">
+    <a href="#accueil" style="background-color: #e91e63;">ACCUEIL</a>
+    <a href="#themes" style="background-color: #9c27b0;">THÈMES</a>
+    <a href="#participation" style="background-color: #2196f3;">PARTICIPATION</a>
+    <a href="#programme" style="background-color: #4caf50;">PROGRAMMATION</a>
+    <a href="#comite" style="background-color: #ff9800;">COMITÉ</a>
+</nav>
+
+    <div class="main-container">
+        <section id="accueil">
+            <div class="hero">
+                <h1>LES CINQUIÈMES JOURNÉES JEUNES CHERCHEURS EN GEOSCIENCES</h1>
+                <h3>(5° JJCG 2026) — Du 02 au 04 avril 2026</h3>
+                <p>La 5ème JJCG 2026 est une rencontre scientifique dédiée aux doctorants et jeunes chercheurs visant à valoriser leurs travaux de recherche et à favoriser les échanges interdisciplinaires en géosciences.</p>
+            </div>
+            <div class="affiche-full">
+                <img src="Affiche.jpg" alt=" JJCG 2026 - AFFICHE">
+            </div>
+        </section>
+
+       <style>
+        /* --- NOUVEAU STYLE CSS POUR LES CARTES DE THÈMES AVEC IMAGES --- */
+        
+        /* Conteneur principal des thèmes */
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px; /* Espace légèrement augmenté */
+        }
+
+        /* Style de chaque carte individuelle */
+        .theme-card {
+            background: white;
+            border: 1px solid #ccc; /* Bordure grise fine */
+            border-top: 10px solid var(--primary-blue); /* Bande bleue en haut */
+            border-radius: 8px;
+            overflow: hidden; /* Pour les coins arrondis de l'image */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Ombre douce */
+            transition: transform 0.3s ease; /* Animation au survol */
+            
+            /* Pour empiler image et texte verticalement */
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center;
+            padding: 0; /* Enlève le padding de la carte */
+        }
+
+        /* Effet au survol de la souris */
+        .theme-card:hover {
+            transform: translateY(-5px); /* Soulève légèrement la carte */
+        }
+
+        /* Style de l'image à l'intérieur de la carte */
+        .theme-card img {
+            width: 100%; /* Prend toute la largeur de la carte */
+            height: 180px; /* Hauteur fixe pour l'uniformité */
+            object-fit: cover; /* Recadre intelligemment sans déformer */
+            border-bottom: 2px solid #eee; /* Ligne de séparation fine */
+        }
+
+        /* Style du bloc de texte sous l'image */
+        .theme-card-text {
+            padding: 20px; /* Remet du padding autour du texte */
+            font-weight: 600;
+            color: #333;
+            font-size: 1.05em;
+            width: 100%;
+            box-sizing: border-box; /* Inclut le padding dans le calcul de largeur */
+        }
+    </style>
+
+    <div class="content">
+        <section id="themes">
+            <h2>THÈMES SCIENTIFIQUES</h2>
+            <div class="themes-grid">
+
+                <div class="theme-card">
+                    <img src="https://elearn.univ-oran2.dz/pluginfile.php/285363/course/overviewfiles/geo%20figure.png" alt="Illustration Géologie fondamentale et appliquée">
+                    <div class="theme-card-text">Géologie fondamentale et appliquée</div>
+                </div>
+
+                <div class="theme-card">
+                    <img src="https://www.geo-ocean.fr/var/storage/images/_aliases/content_embed_page/medias-ifremer/medias-drogm/ressources-minerales/concentrations-en-poids-en-elements-majeurs-dans-les-mineralisations-des-grands-fonds-oceaniques/873481-1-fre-FR/Concentrations-en-poids-en-elements-majeurs-dans-les-mineralisations-des-grands-fonds-oceaniques.jpg" alt="Illustration Ressources minérales et énergétiques">
+                    <div class="theme-card-text">Ressources minérales et énergétiques</div>
+                </div>
+
+                <div class="theme-card">
+                    <img src="https://keystoneacademic-res.cloudinary.com/image/upload/c_fill,w_1920,h_583,g_auto/dpr_auto/f_auto/q_auto/v1/element/18/185252_geophysics.jpg" alt="Illustration Géophysique et risques naturels">
+                    <div class="theme-card-text">Géophysique et risques naturels</div>
+                </div>
+
+                <div class="theme-card">
+                    <img src="https://imadlekouch.wordpress.com/wp-content/uploads/2014/12/pt-schema-fini.jpg" alt="Illustration Géomatique, télédétection et SIG">
+                    <div class="theme-card-text">Géomatique, télédétection et SIG</div>
+                </div>
+
+                <div class="theme-card">
+                    <img src="https://www.static.inrae.fr/cdn/ff/6JuAnhEwpG7cFkeb2sfr1zz1tH8-rW1AhwP5dO5kMMo/1616399324/public/jpg/Infographie%20CPL%20Eau%20V3.jpg" alt="Illustration Ressources en eaux et changements climatiques">
+                    <div class="theme-card-text">Ressources en eaux et changements climatiques</div>
+                </div>
+
+                <div class="theme-card">
+                    <img src="https://institut-superieur-environnement.com/content/uploads/2023/02/developpement-durable-indispensable-en-entreprise.webp" alt="Illustration Environnement et développement durable">
+                    <div class="theme-card-text">Environnement et développement durable</div>
+                </div>
+
+                <div class="theme-card">
+                    <img src="https://ecotourisme.geoparcjbelbani.com/images/uploads/geotourisme_067_0.jpg" alt="Illustration Patrimoine géologique et géotourisme">
+                    <div class="theme-card-text">Patrimoine géologique et géotourisme</div>
+                </div>
+
+                <div class="theme-card">
+                    <img src="https://www.inrae.fr/sites/default/files/styles/actu/public/png/agriculture%20de%20conservation_0.png?itok=K30v81cy" alt="Illustration Valorisation et conservation des sols">
+                    <div class="theme-card-text">Valorisation et conservation des sols</div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+            </section>
+
+            <section id="participation">
+                <h2>PARTICIPATION ET MODALITÉS</h2>
+                <div class="info-box">
+                    <p><strong>Frais d'inscription :</strong> 300 DH (Documentation, pauses-café et déjeuners inclus).</p>
+                    <p><strong>RIB :</strong> 350 810 0000000011791848 44 (Al Barid Bank).</p>
+                    <p><strong>Soumission :</strong> Envoyez vos résumés à jjcg2026@gmail.com avant le 15 mars 2026.</p>
+                    <p><strong>Excursion :</strong> 04 avril 2026 - Maroc central.</p>
+                </div>
+            </section>
+
+            <section id="programme">
+                <h2>🗓️ PROGRAMME GÉNÉRAL</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 20px;">
+        
+        <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-02.png" alt="Programme Page 1" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 1</p>
+        </div>
+        </div><div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-03.png" alt="Programme Page 2" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 2</p>
+        </div>
+        </div><div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-04.png" alt="Programme Page 2" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 2</p>
+        </div>
+</div><div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-05.png" alt="Programme Page 2" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 2</p>
+        </div>
+        </div><div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-06.png" alt="Programme Page 2" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 2</p>
+        </div>
+        </div><div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-07.png" alt="Programme Page 2" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 2</p>
+        </div>
+        </div><div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-08.png" alt="Programme Page 2" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 2</p>
+        </div>
+        </div><div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-09.png" alt="Programme Page 2" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 2</p>
+        </div>
+        </div><div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-10.png" alt="Programme Page 2" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 2</p>
+        </div>
+        </div><div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-11.png" alt="Programme Page 2" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 2</p>
+        </div>
+        </div><div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-12.png" alt="Programme Page 2" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 2</p>
+        </div>
+        </div><div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-13.png" alt="Programme Page 2" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 2</p>
+        </div>
+        </div><div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-14.png" alt="Programme Page 2" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 2</p>
+        </div>
+        </div><div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <img src="JJCG 2026 - Programme-15.png" alt="Programme Page 2" style="width: 100%; height: auto; display: block;">
+            <p style="text-align: center; font-size: 0.9em; padding: 5px; margin: 0; background: #f4f4f4;">Page 2</p>
+        </div>
+            <section id="comite">
+                <h2>COMITÉ D'ORGANISATION</h2>
+                <div class="committee-grid">
+                    <div class="member-card">ACHAB Mohammed, IS, Rabat</div>
+                    <div class="member-card">AOULAD SIDI M'HEND Ali, IS, Rabat</div>
+                    <div class="member-card">BENAMMI Mohamed, FS, Kénitra</div>
+                    <div class="member-card">BENRAMEL Mostapha, AMEDC</div>
+                    <div class="member-card">BOUABDLI Abdelhak, FS, Kénitra</div>
+                    <div class="member-card">BOUIFLANE Mustapaha, IS, Rabat</div>
+                    <div class="member-card">EL BASRI Mohammed, IS, Rabat</div>
+                    <div class="member-card">KOURSAOUI Loubna, FS, Kénitra</div>
+                    <div class="member-card">MHAMMDI Nadia, IS, Rabat</div>
+                    <div class="member-card">NASSRI Ilham, IS, Rabat</div>
+                    <div class="member-card">SADIKI Mohamed, FS, Kénitra</div>
+                    <div class="member-card">TAYEBI Mohamed, FS, Kénitra</div>
+                    <div class="member-card">ZERDEB Mohammed Amine, ESEF, Kénitra</div>
+                </div>
+
+                <h2>COMITÉ SCIENTIFIQUE</h2>
+                <div class="committee-grid">
+                    <div class="member-card">AASSOUMI Habiba, FS, Tétouan</div>
+                    <div class="member-card">AKHSSAS Ahmed, EMI, Rabat</div>
+                    <div class="member-card">AKODAD Mustapha, FP, Nador</div>
+                    <div class="member-card">ALIKOUSS Saida, FSBM, Casablanca</div>
+                    <div class="member-card">AMAHMID Omar, CRMEF, Marrakech</div>
+                    <div class="member-card">AZIZ Ayoub, IS, Rabat</div>
+                    <div class="member-card">AZZA Addi, Ingénieur Géologue</div>
+                    <div class="member-card">BABA Khadija, EMI, Rabat</div>
+                    <div class="member-card">BAGHDAD Bouamar, EAC, Casablanca</div>
+                    <div class="member-card">BAHHAJ Tarik, FS, Rabat</div>
+                    <div class="member-card">BARGACH Kaoutar, IS, Rabat</div>
+                    <div class="member-card">BELFOUL Alaeddine, FS, Agadir</div>
+                    <div class="member-card">BENABDELOUAHAB Tarik, INRA, Rabat</div>
+                    <div class="member-card">BENZOUGAGH Brahim, IS, Rabat</div>
+                    <div class="member-card">BOUDAD Larbi, FS, Rabat</div>
+                    <div class="member-card">CHAKIRI Said, IS, Rabat</div>
+                    <div class="member-card">CHAOUNI Abdell-Ali, FST, Fès</div>
+                    <div class="member-card">CHARROUD Mohammed, FST, Fès</div>
+                    <div class="member-card">CHIKHAOUI Mohamed, IAV, Rabat</div>
+                    <div class="member-card">EL ARABI Hassan, FSDM, Fes</div>
+                    <div class="member-card">EL ARRIM Abdelkrim, FST, Tanger</div>
+                    <div class="member-card">EL BOUKILI Boubker, FS, Rabat</div>
+                    <div class="member-card">EL GUAMRI Youssef, CRMEF, Marrakech</div>
+                    <div class="member-card">EL HADI Hassan, Expert</div>
+                    <div class="member-card">EL HAIBI Hind, FSS, Marrakech</div>
+                    <div class="member-card">EL HAMI Khalil, IS, Rabat</div>
+                    <div class="member-card">EL HILALI Mohamed, FSBM, Casablanca</div>
+                    <div class="member-card">EL HMIDI Fatima, FS, Tétouan</div>
+                    <div class="member-card">EL KATI Imad, FP, Taza</div>
+                    <div class="member-card">EL KHADIRI Abdelali, IS, Rabat</div>
+                    <div class="member-card">EL M'RINI Abdelmounaim, FS, Tétouan</div>
+                    <div class="member-card">EL MOUDNIB Lahcen, IS, Rabat</div>
+                    <div class="member-card">EL MOUSTAKI Saida, FSBM, Casablanca</div>
+                    <div class="member-card">EL MOUTAOUAKIL Nacir, FS, Rabat</div>
+                    <div class="member-card">EL MOUTCHOU Brahim, FS, Tétouan</div>
+                    <div class="member-card">EL OUAI Driss, IS, Rabat</div>
+                    <div class="member-card">EL YAZIDI Mohamed, CRMEF, Marrakech</div>
+                    <div class="member-card">ELOUARDI Hmidou, FS, Meknès</div>
+                    <div class="member-card">EMRAN Anas, IS, Rabat</div>
+                    <div class="member-card">ESSALHI Mourad, FS, Rabat</div>
+                    <div class="member-card">GHAFIRI Abdessamad, FSBM, Casablanca</div>
+                    <div class="member-card">HADDAOUI Najoua, IS, Rabat</div>
+                    <div class="member-card">HAKKOU Mounir, IS, Rabat</div>
+                    <div class="member-card">HINAJE Said, FST, Fès</div>
+                    <div class="member-card">HLILA Rachid, FS, Tétouan</div>
+                    <div class="member-card">JBARI Hassan, IS, Rabat</div>
+                    <div class="member-card">KACIMI Ilias, FS, Rabat</div>
+                    <div class="member-card">KAID RASSOU Khadija, CRMEF, Marrakech</div>
+                    <div class="member-card">KETTANI Omar, IS, Rabat</div>
+                    <div class="member-card">LAAMRANI IDRISSI Abdejalil, FS, Kénitra</div>
+                    <div class="member-card">LABRIKI Allal, FSBM, Casablanca</div>
+                    <div class="member-card">LEMACHA Hassan, ENS, Casablanca</div>
+                    <div class="member-card">LHACHMI Ali, FP, Taza</div>
+                    <div class="member-card">MAACHA Lhou, Managem</div>
+                    <div class="member-card">MASTERE Mohamed, IS, Rabat</div>
+                    <div class="member-card">MEHDIOUI Sakina, ESEF, Kénitra</div>
+                    <div class="member-card">MEKOUAR Soufiana, IS, Rabat</div>
+                    <div class="member-card">MORABIT Zahra, FS, Kénitra</div>
+                    <div class="member-card">MOUFLIH Mustapha, FSBM, Casablanca</div>
+                    <div class="member-card">MOUSSADEK Rachid, INRA, Rabat</div>
+                    <div class="member-card">MOUSSAOUI Raja, FST, Fès</div>
+                    <div class="member-card">NAIM Hafida, FS, Kénitra</div>
+                    <div class="member-card">NOUAYTI Abderahime, IS, Rabat</div>
+                    <div class="member-card">OUADIF Latifa, EMI, Rabat</div>
+                    <div class="member-card">OUAZANI TOUHAMI Abdelouahed, FS, Tétouan</div>
+                    <div class="member-card">OUBBIH Jamal, ESEF, Kénitra</div>
+                    <div class="member-card">OUCHEN Ibrahim, IS, Rabat</div>
+                    <div class="member-card">OUKASSOU Mostafa, FSBM, Casablanca</div>
+                    <div class="member-card">RAHALI Hassane, IS, Rabat</div>
+                    <div class="member-card">RAZOKI Bouchra, CRMEF, Marrakech</div>
+                    <div class="member-card">SAIDI Amal, IS, Rabat</div>
+                    <div class="member-card">SHAIM Abdelillah, FS, Kénitra</div>
+                    <div class="member-card">SI MHAMDI Hicham, FSBM, Casablanca</div>
+                    <div class="member-card">SLIMANI Hamid, IS, Rabat</div>
+                    <div class="member-card">TABYAOUI Hassan, FP, Taza</div>
+                    <div class="member-card">TAHIRI Abdelfattah, Expert</div>
+                    <div class="member-card">TOUMMITE Abdeslam, FST, Errachidia</div>
+                    <div class="member-card">TOUZANI Meryem, INRA, Rabat</div>
+                    <div class="member-card">ZAHOUR Rachid, FST, Fès</div>
+                    <div class="member-card">ZARHOUNI Youssef, Expert</div>
+                    <div class="member-card">ZOUAHRI Abdelmajid, INRA, Rabat</div>
+                </div>
+
+                <h2>COMITÉ DES DOCTORANTS</h2>
+                <div class="committee-grid">
+                    <div class="member-card">ABROURI Salma, FS, Kénitra</div>
+                    <div class="member-card">ALMOUTAMMIL Hayat, FS, Kénitra</div>
+                    <div class="member-card">BENDANY Ahmed, IS, Rabat</div>
+                    <div class="member-card">BOUCHATTA Yasmina, FS, Kénitra</div>
+                    <div class="member-card">BOUYAHYAOUI Anass, IS, Rabat</div>
+                    <div class="member-card">DAHASS Oumaima, IS, Rabat</div>
+                    <div class="member-card">GOUDDAR Ghoufrane, FS, Kénitra</div>
+                    <div class="member-card">NAOUI Basma, FS, Kénitra</div>
+                    <div class="member-card">OUJANE Brahim, IS, Rabat</div>
+                    <div class="member-card">SOUIRI Smail, IS, Rabat</div>
+                    <div class="member-card">ZANDAR Sabah, IS, Rabat</div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+   <footer style="text-align: center; padding: 30px; background-color: #f8f9fa; border-top: 1px solid #ddd; font-family: 'Segoe UI', sans-serif;">
+    
+    <p style="font-weight: 700; color: #333; margin-bottom: 10px;">
+        Coordinateurs : Pr. Mohamed SADIKI & Pr. Mohammed ACHAB
+    </p>
+
+    <p style="color: #666; font-size: 0.95em; margin-bottom: 15px;">
+        Contact : <a href="mailto:jjcg2026@gmail.com" style="color: #1a759f; text-decoration: none; font-weight: 600;">jjcg2026@gmail.com</a> | © 2026 - 5ème JJCG
+    </p>
+
+    <div style="display: flex; justify-content: center;">
+        <a href="https://wa.me/212690965795" target="_blank" style="
+            display: flex; 
+            align-items: center; 
+            color: #25D366; /* Vert WhatsApp */
+            text-decoration: none; 
+            font-weight: 800; 
+            font-size: 1em;
+            padding: 5px 15px;
+            border: 2px solid #25D366;
+            border-radius: 30px;
+            transition: all 0.3s ease;">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#25D366" style="margin-right: 8px;">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.588-5.946 0-6.556 5.332-11.888 11.888-11.888 3.176 0 6.161 1.237 8.404 3.48s3.481 5.229 3.481 8.405c0 6.555-5.332 11.89-11.888 11.89-2.015 0-4.001-.512-5.753-1.487l-6.231 1.609zm6.236-4.08l.35.207c1.458.863 3.102 1.319 4.793 1.319 5.143 0 9.333-4.19 9.333-9.333 0-2.492-.97-4.835-2.731-6.596s-4.104-2.731-6.596-2.731c-5.142 0-9.333 4.19-9.333 9.333 0 1.777.505 3.511 1.458 5.013l.228.36-.96 3.507 3.6-.928zm10.51-6.31c-.274-.137-1.623-.801-1.873-.892-.25-.091-.433-.137-.615.137-.183.274-.707.892-.867 1.074-.16.183-.32.206-.593.069-.274-.137-1.154-.425-2.198-1.356-.812-.724-1.36-1.619-1.52-1.893-.16-.274-.017-.422.12-.559.123-.123.274-.32.411-.48.137-.16.183-.274.274-.457.091-.183.046-.343-.023-.48-.069-.137-.615-1.484-.842-2.032-.22-.533-.444-.46-.615-.468-.16-.007-.343-.01-.525-.01-.183 0-.48.069-.73.343-.25.274-.958.937-.958 2.285s.981 2.652 1.118 2.835c.137.183 1.93 2.947 4.675 4.133.653.282 1.163.451 1.56.578.656.208 1.252.179 1.724.108.526-.079 1.623-.663 1.851-1.303.228-.64.228-1.188.16-1.303-.069-.115-.25-.183-.524-.32z"/>
+            </svg>
+             Contact WhatsApp : 0690965795
+        </a>
+    </div>
+
+</footer>
